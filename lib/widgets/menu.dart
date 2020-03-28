@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:depotoir_test/modele/item.dart';
 import 'package:depotoir_test/widgets/donnée_vide.dart';
 import 'package:depotoir_test/modele/bd_utilisateur.dart';
+import 'package:depotoir_test/widgets/detail.dart';
 
 
 class Menu extends StatefulWidget {
@@ -45,18 +46,24 @@ class _MenuState extends State<Menu> {
                       recuperer();
                     });
                   }),
+                leading: new IconButton(icon: new Icon(Icons.edit), onPressed: (() => ajouter(item))),
+                onTap: () {
+                  Navigator.push(context, new MaterialPageRoute(builder: (BuildContext buildContext) {
+                      return new ItemDetail(item);
+                  }));
+                },
               );
             }
           ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,  
       floatingActionButton: FloatingActionButton(
-        onPressed: ajouter, 
+        onPressed: (() =>ajouter(null)), 
         child: new Icon(Icons.add),
         ),    
     );
   }
 
-  Future<Null> ajouter() async {
+  Future<Null> ajouter(Item item) async {
     await showDialog(
       context: context,
       barrierDismissible: false,
@@ -66,7 +73,7 @@ class _MenuState extends State<Menu> {
           content: new TextField(
             decoration: new InputDecoration(
               labelText: "Nom du lieu",
-              hintText: "ex: resto 'Le Coin'",
+              hintText: (item == null)?"ex: resto 'Le Coin'": item.nom,
             ),
             onChanged: (String str) {
               nouvelleListe = str;
@@ -77,10 +84,14 @@ class _MenuState extends State<Menu> {
             new FlatButton(onPressed: () {
               // ajouter le code ici pour l base de donnée
               if (nouvelleListe != null) {
-                Map<String, dynamic> map = {'nom': nouvelleListe};
-                Item item = new Item();
-                item.fromMap(map);
-                DatabaseClient().ajoutItem(item).then((i) => recuperer());
+                if (item == null) {
+                  item = new Item();
+                  Map<String, dynamic> map = {'nom': nouvelleListe};
+                  item.fromMap(map);
+                } else {
+                  item.nom = nouvelleListe;
+                }
+                DatabaseClient().upsertItem(item).then((i) => recuperer());
                 nouvelleListe = null;
               }
               Navigator.pop(buildContext);
