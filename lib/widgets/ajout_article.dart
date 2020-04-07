@@ -45,7 +45,7 @@ class _AjoutState extends State<Ajout> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   (image == null)
-                    ? new Image.asset('images\tof.jpg')
+                    ? new Image.asset('images/tof.jpg')
                     : new Image.file(new File(image)),
                   new Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,

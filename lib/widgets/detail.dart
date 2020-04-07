@@ -64,7 +64,7 @@ class _ItemDetailState extends State<ItemDetail> {
               child: new Column(children: <Widget>[
                 new Text(articles.nom),
                 (articles.image == null)
-                  ? new Image.asset('images\tof.jpg')
+                  ? new Image.asset('images/tof.jpg')
                   : new Image.file(new File(articles.image)),
                 new Text((articles.description == null) ? 'Aucune description donnée': "Description: ${articles.description}"),
               ],)

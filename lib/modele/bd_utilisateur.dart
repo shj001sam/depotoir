@@ -31,7 +31,7 @@ class DatabaseClient {
     'CREATE TABLE item ( id INTEGER PRIMARY KEY, nom TEXT NOT NULL)');
 
     await db.execute(
-      'CREATE TABLE article ( id INTEGER PRIMARY KEY, nom TEXT NOT NULL, item INTEGER, descrition TEXT, image TEXT)'
+      'CREATE TABLE article ( id INTEGER PRIMARY KEY, nom TEXT NOT NULL, item INTEGER, description TEXT, image TEXT)'
     );
   }
 
@@ -50,13 +50,14 @@ class DatabaseClient {
     return await maDatabase.update('item', item.toMap(), where: 'id = ?', whereArgs: [item.id]);
   }
 
-  Future<int> upsertItem(Item item) async {
+  Future<Item> upsertItem(Item item) async {
     Database maDatabase = await database;
     if (item.id == null) {
       item.id = await maDatabase.insert('item', item.toMap());
     }else {
       await maDatabase.update('item', item.toMap(), where: 'id = ?', whereArgs: [item.id]);
     }
+    return item;
   }
   
   Future<Article> upsertArticle(Article article) async {
