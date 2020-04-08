@@ -57,7 +57,7 @@ class _ItemDetailState extends State<ItemDetail> {
       ? new DonneesVide()
         : new GridView.builder(
           itemCount: article.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2), 
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1), 
           itemBuilder: (context, i) {
             Article articles = article[i];
             return new Card(
@@ -66,12 +66,10 @@ class _ItemDetailState extends State<ItemDetail> {
                 new Container(
                   height: MediaQuery.of(context).size.height / 2.5,
                   child: (articles.image == null)
-                    ? new Image.asset('images/tof.jpg')
-                    : new Image.file(new File(articles.image)),
+                      ? new Image.asset('images/tof.jpg')
+                      : new Image.file(new File(articles.image)),
                 ),
-                (articles.image == null)
-                  ? new Image.asset('images/tof.jpg')
-                  : new Image.file(new File(articles.image)),
+                
                 new Text((articles.description == null) ? 'Aucune description donnée': "Description: ${articles.description}"),
               ],)
             );
