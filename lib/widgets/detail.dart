@@ -62,7 +62,13 @@ class _ItemDetailState extends State<ItemDetail> {
             Article articles = article[i];
             return new Card(
               child: new Column(children: <Widget>[
-                new Text(articles.nom),
+                new Text(articles.nom, textScaleFactor: 1.5,),
+                new Container(
+                  height: MediaQuery.of(context).size.height / 2.5,
+                  child: (articles.image == null)
+                    ? new Image.asset('images/tof.jpg')
+                    : new Image.file(new File(articles.image)),
+                ),
                 (articles.image == null)
                   ? new Image.asset('images/tof.jpg')
                   : new Image.file(new File(articles.image)),

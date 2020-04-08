@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:depotoir_test/modele/article.dart';
 import 'package:depotoir_test/modele/bd_utilisateur.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Ajout extends StatefulWidget {
 
@@ -50,7 +51,7 @@ class _AjoutState extends State<Ajout> {
                   new Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      new IconButton(icon: new Icon(Icons.camera_enhance), onPressed: null),
+                      new IconButton(icon: new Icon(Icons.camera_enhance), onPressed: (() => getImage(ImageSource.camera))),
                       new IconButton(icon: new Icon(Icons.place), onPressed: null)
                     ],
                   ),
@@ -99,6 +100,13 @@ class _AjoutState extends State<Ajout> {
         Navigator.pop(context);
       });
     }
+  }
+
+  Future getImage(ImageSource source) async {
+    var nouvelleImage = await ImagePicker.pickImage(source: source);
+    setState(() {
+      image = nouvelleImage.path;
+    });
   }
 
 }
